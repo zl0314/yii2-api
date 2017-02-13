@@ -19,8 +19,7 @@ return [
             'layout' => '@app/views/layouts/main.php',
         ]
     ],
-    'components' => [
-        'layout' => false,
+    'components' => [ 
         'user' => [
             'identityClass' => 'common\models\AdminModel',
             'enableAutoLogin' => true,
