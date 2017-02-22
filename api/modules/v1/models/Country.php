@@ -3,21 +3,21 @@
 namespace api\modules\v1\models;
 
 use Yii;
- 
+use \yii\db\ActiveRecord;
 /**
- * This is the model class for table "goods".
+ * This is the model class for table "country".
  *
  * @property integer $id
  * @property string $name
  */
-class Goods extends \yii\db\ActiveRecord
+class Country extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'goods';
+        return 'country';
     }
 
     /**
@@ -26,6 +26,7 @@ class Goods extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required'],
             [['name'], 'string', 'max' => 100],
         ];
     }
@@ -40,6 +41,4 @@ class Goods extends \yii\db\ActiveRecord
             'name' => 'Name',
         ];
     }
-   
-    
 }

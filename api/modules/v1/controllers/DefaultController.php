@@ -2,8 +2,9 @@
 
 namespace api\modules\v1\controllers;
 
-use yii\web\Controller;
-
+use Yii;
+use yii\web\Controller; 
+use yii\web\NotFoundHttpException;
 /**
  * Default controller for the `v1` module
  */
@@ -15,6 +16,6 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        throw new NotFoundHttpException("Unsuported action request", 100);
     }
 }

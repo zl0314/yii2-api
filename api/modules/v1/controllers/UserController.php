@@ -1,41 +1,30 @@
 <?php
-
 namespace api\modules\v1\controllers;
- 
-use yii\filters\Cors;
-use yii\helpers\ArrayHelper; 
+use Yii;
 use yii\rest\ActiveController;
 use yii\web\Response;
-class GoodsController extends ActiveController
+use yii\helpers\ArrayHelper;
+use yii\filters\auth\QueryParamAuth;
+
+class UserController extends ActiveController
 {
-   public $modelClass = 'api\modules\v1\models\Goods';
-   public $serializer = [
+    public $modelClass = 'api\modules\v1\models\User';
+    public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
-  ];
-   public function behaviors()
-   {
+    ];
+     public function behaviors() {
        $behaviors = parent::behaviors();
        $behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_JSON;
-       
-        return ArrayHelper::merge([
-        [
-            'class' => Cors::className(),
-            'cors' => [
-                'Origin' => ['http://localhost:8100'],
-                'Access-Control-Request-Method' => ['GET', 'HEAD', 'OPTIONS'],
-            ],
-            'actions' => [
-                'index' => [
-                    'Access-Control-Allow-Credentials' => true,
-                ]
-            ]
-        ],
-    ], $behaviors);
-      
-  }
-
-  public function actionSearch(){
+       return ArrayHelper::merge ( $behaviors, [ 
+                'authenticator' => [ 
+                    'class' => QueryParamAuth::className() 
+                ] 
+        ] );
+    }
+   
+    public function actionSearch($str)
+    {
         return [
             [
                 'id' => 5,
@@ -53,8 +42,13 @@ class GoodsController extends ActiveController
                 'name' => "Happy Sky",
             ],
         ];
-   }
-  
-  
-
+    }
+    /*public function actionLogin()
+    {
+        //return Yii::$app->request->post('username');
+        return [
+            'result' => 'success',
+            'access_token' => 'abc',
+        ];
+    }*/
 }
